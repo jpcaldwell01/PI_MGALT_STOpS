@@ -262,34 +262,17 @@ def errorMain(bod,opts):
         print('Best Leg Tracking was found to be on. Unfortunately, it cannot be activated for single transfer missions, and is now considered off. Will resume optimization in 10 seconds.')
         time.sleep(10)
         
+    # Best Leg Tracking does not populate when MBH is first. Just moves it to the last spot.
     if opts['best_Leg_Tracking'] == 'y':
         while opts['island']['isl_list'][0] == 'MBH':
             opts['island']['isl_list'][:-1] = opts['island']['isl_list'][1:]
             opts['island']['isl_list'][-1] = 'MBH'
         
-
-    # Check if Parallel Toolbox
-    '''
-    try:
-    	multiprocessing.Process('distcomp');
-        clc
+    # jplEphem data is weird with the 2D approximations MGALT-STOpS currently has. Needs to be fixed.
+    if opts['ephemeris'] == 'jplEphem':
+        print("The 'jplEphem' data has not yet been configured to work with MGALT-STOpS. Changing to 'JPL_Horizons'. Will resume optimization in 10 seconds.")
+        time.sleep(10)
         
-    catch
-        
-        errorPathDisplay();
-        fprintf(2,'Parallel Processing Toolbox not installed.\n')
-        fprintf(2,'Set "OPT.parallel" to false under the "Main Script" header.\n')
-        fprintf(2,'If this message is an error, disable it under "errorMain".\n')
-    
-        isBroken = true;
-        return isBroken
-        
-    end
-    
-    
-    
-    end
-    '''
     return isBroken,opts
                 
         

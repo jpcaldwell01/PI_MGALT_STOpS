@@ -2,7 +2,8 @@
 
 from numpy import subtract
 from Other_Functions.constants import constants
-from jplephem.spk import SPK
+# from jplephem.spk import SPK      # Uncomment for JPLEphem use.
+# If this ^^ causes errors, install the package fround here https://anaconda.org/conda-forge/jplephem
 
 def planetLocation( planet,JD,opts ):
 # # # LOOK UP PLANETARY STATE VECTORS # # #
@@ -15,8 +16,13 @@ def planetLocation( planet,JD,opts ):
 #       pos:        planet position wrt sun [km]
 #       vel:        planet velocity wrt sun [km/s]
 # =============================================================================
-       
+           
+    # Temp variables. Delete these if implementing jplephem
+    pos = 0
+    vel = 0
+    '''
     # pre-allocate JPL data
+
     PlEph = SPK.open('de432s.bsp') # initiate JPL look-up
 
     # sun position and velocity wrt SS barycenter at JD
@@ -31,4 +37,5 @@ def planetLocation( planet,JD,opts ):
     # obtain planetary velociy wrt sun, not SSB
     vel = subtract(vel,velSun)      # [km/day]
     vel = vel/(constants('s2day')[0])  # [km/s]
+    '''
     return pos, vel
